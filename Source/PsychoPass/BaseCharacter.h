@@ -6,10 +6,26 @@
 #include "GameFramework/Character.h"
 #include "BaseCharacter.generated.h"
 
-UCLASS()
+UCLASS(Blueprintable)
 class PSYCHOPASS_API ABaseCharacter : public ACharacter
 {
 	GENERATED_BODY()
+public:
+	UPROPERTY(BlueprintReadWrite, EditAnywhere, Category = "BaseCharacter")
+		float Health = 100;
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere, Category = "BaseCharacter")
+		bool isDead = false;
+	virtual void CalculateDead();
+
+	UFUNCTION(BlueprintCallable, Category = "BaseCharacter")
+		virtual void CalculateHealth(float delta);
+
+#if WITH_EDITOR
+	virtual void PostEditChangeProperty(FPropertyChangedEvent& PropertyChangedEvent)
+		override;
+
+
+#endif
 
 public:
 	// Sets default values for this character's properties
